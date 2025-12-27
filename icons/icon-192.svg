@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9d4edd"/>
+      <stop offset="100%" style="stop-color:#2d1b4e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd700"/>
+      <stop offset="100%" style="stop-color:#ffdf80"/>
+    </linearGradient>
+  </defs>
+  <rect width="192" height="192" rx="40" fill="url(#bg)"/>
+  <!-- Main star -->
+  <path d="M96 30 L103 70 L145 70 L112 95 L125 140 L96 115 L67 140 L80 95 L47 70 L89 70 Z" fill="url(#gold)"/>
+  <!-- Small sparkles -->
+  <circle cx="45" cy="45" r="4" fill="#fff" opacity="0.8"/>
+  <circle cx="150" cy="50" r="3" fill="#fff" opacity="0.6"/>
+  <circle cx="55" cy="145" r="3" fill="#fff" opacity="0.7"/>
+  <circle cx="145" cy="140" r="4" fill="#fff" opacity="0.5"/>
+  <circle cx="165" cy="95" r="2" fill="#fff" opacity="0.6"/>
+  <circle cx="30" cy="100" r="2" fill="#fff" opacity="0.5"/>
+</svg>

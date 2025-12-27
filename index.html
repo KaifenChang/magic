@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="魔法28天感恩練習 - 基於朗達·拜恩《魔法》一書的感恩練習應用">
+    <meta name="theme-color" content="#9d4edd">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="魔法28天">
+
+    <title>魔法28天 ✨ 感恩練習</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="icons/icon-192.svg">
+    <link rel="apple-touch-icon" href="icons/icon-192.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="magic-bg">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="stars3"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- 首頁 -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <div class="magic-circle">
+                    <span class="magic-symbol">✨</span>
+                </div>
+                <h1>魔法28天</h1>
+                <p class="subtitle">感恩練習之旅</p>
+                <p class="quote">"當你對擁有的一切心存感激，你會吸引更多美好的事物。"</p>
+                <p class="author">— 朗達·拜恩《魔法》</p>
+
+                <div class="progress-ring-container">
+                    <svg class="progress-ring" width="120" height="120">
+                        <circle class="progress-ring-bg" cx="60" cy="60" r="52" />
+                        <circle class="progress-ring-circle" cx="60" cy="60" r="52" />
+                    </svg>
+                    <div class="progress-text">
+                        <span id="current-day">1</span>
+                        <span class="day-label">/ 28天</span>
+                    </div>
+                </div>
+
+                <button id="start-btn" class="primary-btn">
+                    <span>開始今日練習</span>
+                    <span class="btn-sparkle">✨</span>
+                </button>
+
+                <button id="view-all-btn" class="secondary-btn">
+                    查看所有練習
+                </button>
+            </div>
+        </section>
+
+        <!-- 今日練習頁 -->
+        <section id="practice" class="page">
+            <header class="page-header">
+                <button class="back-btn" data-target="home">← 返回</button>
+                <h2 id="practice-day-title">第1天</h2>
+            </header>
+
+            <div class="practice-content">
+                <div class="practice-card">
+                    <div class="practice-badge">
+                        <span id="practice-icon">🌟</span>
+                    </div>
+                    <h3 id="practice-title">數算你的恩典</h3>
+                    <div id="practice-description" class="practice-description">
+                        <!-- 練習說明會動態載入 -->
+                    </div>
+                </div>
+
+                <!-- 晨間感恩清單 -->
+                <div class="gratitude-section" id="morning-section">
+                    <h4>🌅 晨間感恩清單</h4>
+                    <p class="section-tip">寫下生命中讓你感恩的十件事</p>
+                    <div class="gratitude-list" id="morning-list">
+                        <!-- 動態生成 -->
+                    </div>
+                    <button id="save-morning-btn" class="save-btn">
+                        💾 儲存感恩清單
+                    </button>
+                </div>
+
+                <!-- 當日特定練習 -->
+                <div class="daily-practice-section" id="daily-practice-section">
+                    <h4>📝 今日練習</h4>
+                    <div id="daily-practice-content">
+                        <!-- 動態生成 -->
+                    </div>
+                </div>
+
+                <!-- 晚間魔法石 -->
+                <div class="magic-stone-section" id="stone-section">
+                    <h4>🌙 晚間魔法石練習</h4>
+                    <div class="stone-container">
+                        <div class="magic-stone" id="magic-stone">
+                            <span>🪨</span>
+                        </div>
+                        <p>握著你的魔法石，想想今天最美好的一件事</p>
+                    </div>
+                    <textarea id="best-thing" placeholder="今天最美好的一件事是..."></textarea>
+                    <button id="complete-day-btn" class="primary-btn complete-btn">
+                        ✨ 完成今日練習
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 所有練習總覽頁 -->
+        <section id="all-practices" class="page">
+            <header class="page-header">
+                <button class="back-btn" data-target="home">← 返回</button>
+                <h2>28天練習總覽</h2>
+            </header>
+
+            <div class="practices-grid" id="practices-grid">
+                <!-- 動態生成28天練習卡片 -->
+            </div>
+        </section>
+
+        <!-- 感恩日記頁 -->
+        <section id="journal" class="page">
+            <header class="page-header">
+                <button class="back-btn" data-target="home">← 返回</button>
+                <h2>📖 感恩日記</h2>
+            </header>
+
+            <div class="journal-content" id="journal-content">
+                <!-- 動態生成日記內容 -->
+            </div>
+        </section>
+    </div>
+
+    <!-- 導航列 -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" data-target="home">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">首頁</span>
+        </button>
+        <button class="nav-item" data-target="practice">
+            <span class="nav-icon">✨</span>
+            <span class="nav-label">練習</span>
+        </button>
+        <button class="nav-item" data-target="journal">
+            <span class="nav-icon">📖</span>
+            <span class="nav-label">日記</span>
+        </button>
+    </nav>
+
+    <!-- 完成動畫 -->
+    <div id="completion-modal" class="modal">
+        <div class="modal-content celebration">
+            <div class="confetti"></div>
+            <span class="celebration-icon">🎉</span>
+            <h3>太棒了！</h3>
+            <p id="completion-message">你完成了今天的練習！</p>
+            <p class="magic-words">感謝你、感謝你、感謝你</p>
+            <button id="close-modal-btn" class="primary-btn">繼續</button>
+        </div>
+    </div>
+
+    <script src="practices.js"></script>
+    <script src="app.js"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        // 註冊 Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('Service Worker 註冊成功:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('Service Worker 註冊失敗:', error);
+                    });
+            });
+        }
+
+        // 安裝提示
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+
+            // 顯示安裝按鈕（如果需要）
+            const installBtn = document.getElementById('install-btn');
+            if (installBtn) {
+                installBtn.style.display = 'block';
+                installBtn.addEventListener('click', () => {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('用戶接受安裝');
+                        }
+                        deferredPrompt = null;
+                    });
+                });
+            }
+        });
+
+        // 推播通知權限請求
+        async function requestNotificationPermission() {
+            if ('Notification' in window && 'serviceWorker' in navigator) {
+                const permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                    console.log('通知權限已授予');
+                    scheduleReminders();
+                }
+            }
+        }
+
+        // 設定每日提醒
+        function scheduleReminders() {
+            // 使用 localStorage 記錄提醒設定
+            const reminderSet = localStorage.getItem('magicReminders');
+            if (!reminderSet) {
+                localStorage.setItem('magicReminders', 'true');
+                console.log('已設定每日提醒');
+            }
+        }
+    </script>
+</body>
+
+</html>

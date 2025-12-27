@@ -1,0 +1,829 @@
+/* ===== 設計系統 ===== */
+:root {
+    /* 色彩 */
+    --bg-dark: #0a0a1a;
+    --bg-card: rgba(20, 20, 50, 0.8);
+    --bg-glass: rgba(255, 255, 255, 0.05);
+    --primary: #9d4edd;
+    --primary-light: #c77dff;
+    --secondary: #7b2cbf;
+    --accent: #e0aaff;
+    --gold: #ffd700;
+    --gold-soft: #ffdf80;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --success: #10b981;
+    --border: rgba(255, 255, 255, 0.1);
+
+    /* 字體 */
+    --font-main: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* 間距 */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+
+    /* 圓角 */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-full: 50%;
+
+    /* 陰影 */
+    --shadow-glow: 0 0 30px rgba(157, 78, 221, 0.3);
+    --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+    /* 動畫 */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* ===== 全局樣式 ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-main);
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* ===== 動態星空背景 ===== */
+.magic-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #2d1b4e 100%);
+    overflow: hidden;
+}
+
+.stars, .stars2, .stars3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: repeat;
+}
+
+.stars {
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+        radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 230px 80px, #fff, transparent),
+        radial-gradient(2px 2px at 300px 150px, rgba(255,255,255,0.7), transparent);
+    background-size: 350px 350px;
+    animation: twinkle 4s ease-in-out infinite;
+}
+
+.stars2 {
+    background-image:
+        radial-gradient(1px 1px at 50px 100px, #fff, transparent),
+        radial-gradient(2px 2px at 100px 50px, rgba(255,223,128,0.8), transparent),
+        radial-gradient(1px 1px at 180px 180px, #fff, transparent),
+        radial-gradient(2px 2px at 250px 20px, rgba(224,170,255,0.9), transparent);
+    background-size: 300px 300px;
+    animation: twinkle 5s ease-in-out infinite 1s;
+}
+
+.stars3 {
+    background-image:
+        radial-gradient(1px 1px at 80px 60px, rgba(255,215,0,0.6), transparent),
+        radial-gradient(2px 2px at 140px 140px, rgba(157,78,221,0.5), transparent),
+        radial-gradient(1px 1px at 200px 100px, #fff, transparent);
+    background-size: 250px 250px;
+    animation: twinkle 6s ease-in-out infinite 2s;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ===== 應用容器 ===== */
+.app-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: var(--spacing-md);
+    padding-bottom: 100px;
+    min-height: 100vh;
+}
+
+/* ===== 頁面切換 ===== */
+.page {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== 首頁 Hero ===== */
+.hero {
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+}
+
+.magic-circle {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto var(--spacing-lg);
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-glow);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.magic-symbol {
+    font-size: 3rem;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); box-shadow: var(--shadow-glow); }
+    50% { transform: scale(1.05); box-shadow: 0 0 50px rgba(157, 78, 221, 0.5); }
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gold), var(--gold-soft), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--spacing-xs);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.quote {
+    font-style: italic;
+    color: var(--text-secondary);
+    max-width: 400px;
+    margin: 0 auto var(--spacing-xs);
+    font-size: 0.95rem;
+}
+
+.author {
+    color: var(--accent);
+    font-size: 0.85rem;
+    margin-bottom: var(--spacing-xl);
+}
+
+/* ===== 進度環 ===== */
+.progress-ring-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto var(--spacing-lg);
+}
+
+.progress-ring {
+    transform: rotate(-90deg);
+}
+
+.progress-ring-bg {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 8;
+}
+
+.progress-ring-circle {
+    fill: none;
+    stroke: url(#gradient);
+    stroke: var(--primary);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 326.73;
+    stroke-dashoffset: 326.73;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.progress-text #current-day {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+.day-label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* ===== 按鈕樣式 ===== */
+.primary-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--text-primary);
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-glow);
+    font-family: var(--font-main);
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 40px rgba(157, 78, 221, 0.5);
+}
+
+.primary-btn:active {
+    transform: translateY(0);
+}
+
+.btn-sparkle {
+    animation: sparkle 1.5s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.2); }
+}
+
+.secondary-btn {
+    display: block;
+    margin: var(--spacing-md) auto 0;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    font-family: var(--font-main);
+}
+
+.secondary-btn:hover {
+    background: var(--bg-glass);
+    color: var(--text-primary);
+    border-color: var(--primary-light);
+}
+
+/* ===== 頁面標題 ===== */
+.page-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border);
+}
+
+.back-btn {
+    background: var(--bg-glass);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-family: var(--font-main);
+}
+
+.back-btn:hover {
+    background: var(--primary);
+    color: var(--text-primary);
+}
+
+.page-header h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+/* ===== 練習卡片 ===== */
+.practice-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+}
+
+.practice-badge {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto var(--spacing-md);
+    background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.practice-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--gold);
+}
+
+.practice-description {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    text-align: left;
+}
+
+.practice-description p {
+    margin-bottom: var(--spacing-sm);
+}
+
+.practice-description ul {
+    list-style: none;
+    padding-left: var(--spacing-sm);
+}
+
+.practice-description li {
+    position: relative;
+    padding-left: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
+}
+
+.practice-description li::before {
+    content: "✦";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+}
+
+/* ===== 感恩區塊 ===== */
+.gratitude-section,
+.magic-stone-section,
+.daily-practice-section {
+    background: var(--bg-glass);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.gratitude-section h4,
+.magic-stone-section h4,
+.daily-practice-section h4 {
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--accent);
+}
+
+.section-tip {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-md);
+}
+
+/* ===== 感恩清單輸入 ===== */
+.gratitude-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.gratitude-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.gratitude-item span {
+    color: var(--gold);
+    font-weight: 600;
+    min-width: 24px;
+}
+
+.gratitude-item input {
+    flex: 1;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-sm);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-family: var(--font-main);
+    transition: all var(--transition-fast);
+}
+
+.gratitude-item input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 10px rgba(157, 78, 221, 0.2);
+}
+
+.gratitude-item input::placeholder {
+    color: var(--text-muted);
+}
+
+.save-btn {
+    width: 100%;
+    padding: var(--spacing-sm);
+    background: var(--bg-card);
+    border: 1px solid var(--success);
+    color: var(--success);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    font-family: var(--font-main);
+}
+
+.save-btn:hover {
+    background: var(--success);
+    color: var(--text-primary);
+}
+
+/* ===== 魔法石 ===== */
+.stone-container {
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.magic-stone {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--spacing-sm);
+    background: linear-gradient(135deg, #4a5568, #2d3748, #1a202c);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.5),
+        inset 0 2px 10px rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.magic-stone:hover {
+    transform: scale(1.1);
+    box-shadow: 
+        0 0 30px rgba(255, 215, 0, 0.3),
+        inset 0 2px 10px rgba(255, 255, 255, 0.2);
+}
+
+.magic-stone.active {
+    animation: stoneGlow 2s ease-in-out infinite;
+}
+
+@keyframes stoneGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+    50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); }
+}
+
+.stone-container p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+#best-thing {
+    width: 100%;
+    min-height: 100px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-family: var(--font-main);
+    resize: vertical;
+    margin-bottom: var(--spacing-md);
+}
+
+#best-thing:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.complete-btn {
+    width: 100%;
+}
+
+/* ===== 練習總覽網格 ===== */
+.practices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.practice-grid-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.practice-grid-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.practice-grid-item:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary);
+}
+
+.practice-grid-item:hover::before {
+    opacity: 1;
+}
+
+.practice-grid-item.completed {
+    border-color: var(--success);
+}
+
+.practice-grid-item.completed::after {
+    content: "✓";
+    position: absolute;
+    top: var(--spacing-xs);
+    right: var(--spacing-xs);
+    width: 20px;
+    height: 20px;
+    background: var(--success);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+}
+
+.practice-grid-item.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.practice-grid-item .day-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: var(--spacing-xs);
+}
+
+.practice-grid-item .practice-name {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+/* ===== 日記頁面 ===== */
+.journal-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.journal-entry {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+}
+
+.journal-entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--border);
+}
+
+.journal-entry-day {
+    font-weight: 600;
+    color: var(--gold);
+}
+
+.journal-entry-date {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.journal-entry-title {
+    color: var(--accent);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1rem;
+}
+
+.journal-entry-content {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.journal-entry-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.journal-entry-content li {
+    padding: var(--spacing-xs) 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.journal-entry-content li:last-child {
+    border-bottom: none;
+}
+
+.empty-journal {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-muted);
+}
+
+/* ===== 底部導航 ===== */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 10, 26, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-sm) var(--spacing-md);
+    z-index: 100;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    transition: all var(--transition-fast);
+    font-family: var(--font-main);
+}
+
+.nav-item:hover,
+.nav-item.active {
+    color: var(--primary-light);
+}
+
+.nav-icon {
+    font-size: 1.3rem;
+}
+
+.nav-label {
+    font-size: 0.75rem;
+}
+
+/* ===== 完成彈窗 ===== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+}
+
+.modal.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.celebration-icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: var(--spacing-md);
+    animation: bounce 1s ease infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.modal-content h3 {
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: var(--spacing-sm);
+}
+
+.modal-content p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.magic-words {
+    font-size: 1.2rem;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: var(--spacing-lg);
+}
+
+/* ===== 響應式設計 ===== */
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .practices-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .practice-card {
+        padding: var(--spacing-md);
+    }
+}
+
+/* ===== 滾動條樣式 ===== */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-light);
+}

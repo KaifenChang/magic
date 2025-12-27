@@ -1,0 +1,31 @@
+{
+    "name": "魔法28天",
+    "short_name": "魔法28天",
+    "description": "28天感恩練習應用 - 基於朗達·拜恩《魔法》",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0a0a1a",
+    "theme_color": "#9d4edd",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "/icons/icon-192.svg",
+            "sizes": "192x192",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        },
+        {
+            "src": "/icons/icon-512.svg",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        }
+    ],
+    "categories": [
+        "lifestyle",
+        "health",
+        "productivity"
+    ],
+    "lang": "zh-TW",
+    "dir": "ltr"
+}
