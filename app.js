@@ -82,6 +82,14 @@ class MagicApp {
             });
         });
 
+        // 上一天 / 下一天 導航按鈕
+        document.getElementById('prev-day-btn').addEventListener('click', () => {
+            this.navigateDay(-1);
+        });
+        document.getElementById('next-day-btn').addEventListener('click', () => {
+            this.navigateDay(1);
+        });
+
         // 儲存晨間感恩
         document.getElementById('save-morning-btn').addEventListener('click', () => {
             this.saveMorningGratitude();
@@ -103,6 +111,14 @@ class MagicApp {
             this.showPage('home');
             this.updateNavActive('home');
         });
+    }
+
+    // 切換天數
+    navigateDay(delta) {
+        const newDay = this.currentDay + delta;
+        if (newDay >= 1 && newDay <= 28) {
+            this.startPractice(newDay);
+        }
     }
 
     // 顯示頁面
@@ -185,8 +201,40 @@ class MagicApp {
             stoneSection.style.display = 'none';
         }
 
+        // 顯示明日準備提醒
+        this.renderNextDayPrep(practice);
+
         this.showPage('practice');
         this.updateNavActive('practice');
+    }
+
+    // 渲染明日準備提醒
+    renderNextDayPrep(practice) {
+        // 移除舊的提醒（如果有）
+        const oldReminder = document.getElementById('next-day-prep');
+        if (oldReminder) {
+            oldReminder.remove();
+        }
+
+        // 如果有明日準備項目，顯示提醒
+        if (practice.nextDayPrep) {
+            const prep = practice.nextDayPrep;
+            const stoneSection = document.getElementById('stone-section');
+
+            const reminderHtml = `
+                <div id="next-day-prep" class="next-day-prep-section ${prep.critical ? 'critical' : ''} ${prep.important ? 'important' : ''}">
+                    <h4>${prep.critical ? '⚠️ 重要提醒' : '📖 明日準備'}</h4>
+                    <p class="prep-reminder">${prep.reminder}</p>
+                    ${prep.items ? `
+                        <ul class="prep-items">
+                            ${prep.items.map(item => `<li>☐ ${item}</li>`).join('')}
+                        </ul>
+                    ` : ''}
+                </div>
+            `;
+
+            stoneSection.insertAdjacentHTML('beforebegin', reminderHtml);
+        }
     }
 
     // 渲染晨間感恩清單
@@ -555,22 +603,20 @@ class MagicApp {
         PRACTICES.forEach((practice, index) => {
             const day = index + 1;
             const isCompleted = this.userData.completedDays.includes(day);
-            const isCurrent = day === this.currentDay;
-            const isLocked = day > this.currentDay && !this.userData.completedDays.includes(day - 1);
+            // 暫時解鎖所有練習供測試
+            const isLocked = false; // day > this.currentDay && !this.userData.completedDays.includes(day - 1);
 
             const item = document.createElement('div');
-            item.className = `practice-grid-item ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}`;
+            item.className = `practice-grid-item ${isCompleted ? 'completed' : ''}`;
             item.innerHTML = `
                 <div class="day-number">${practice.icon}</div>
                 <div class="day-number">第${day}天</div>
                 <div class="practice-name">${practice.title}</div>
             `;
 
-            if (!isLocked) {
-                item.addEventListener('click', () => {
-                    this.startPractice(day);
-                });
-            }
+            item.addEventListener('click', () => {
+                this.startPractice(day);
+            });
 
             grid.appendChild(item);
         });
@@ -821,6 +867,120 @@ const additionalStyles = `
         padding: var(--spacing-xs) 0;
         color: var(--text-secondary);
         font-size: 0.9rem;
+    }
+
+    /* 明日準備提醒樣式 */
+    .next-day-prep-section {
+        background: var(--bg-glass);
+        border: 1px solid var(--accent);
+        border-radius: var(--radius-lg);
+        padding: var(--spacing-lg);
+        margin-bottom: var(--spacing-lg);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .next-day-prep-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent), var(--primary));
+    }
+
+    .next-day-prep-section.important {
+        border-color: var(--gold);
+        background: rgba(255, 215, 0, 0.05);
+    }
+
+    .next-day-prep-section.important::before {
+        background: linear-gradient(90deg, var(--gold), var(--gold-soft));
+    }
+
+    .next-day-prep-section.critical {
+        border-color: #ff6b6b;
+        background: rgba(255, 107, 107, 0.1);
+        animation: critical-pulse 2s ease-in-out infinite;
+    }
+
+    .next-day-prep-section.critical::before {
+        background: linear-gradient(90deg, #ff6b6b, #ee5a5a);
+    }
+
+    @keyframes critical-pulse {
+        0%, 100% { box-shadow: 0 0 10px rgba(255, 107, 107, 0.3); }
+        50% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.5); }
+    }
+
+    .next-day-prep-section h4 {
+        color: var(--accent);
+        margin-bottom: var(--spacing-sm);
+        font-size: 1.1rem;
+    }
+
+    .next-day-prep-section.important h4 {
+        color: var(--gold);
+    }
+
+    .next-day-prep-section.critical h4 {
+        color: #ff6b6b;
+    }
+
+    .prep-reminder {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .prep-items {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .prep-items li {
+        padding: var(--spacing-xs) 0;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        padding-left: var(--spacing-md);
+    }
+
+    /* 天數導航按鈕 */
+    .practice-header {
+        justify-content: space-between;
+    }
+
+    .day-nav-buttons {
+        display: flex;
+        gap: var(--spacing-xs);
+        margin-left: auto;
+    }
+
+    .day-nav-btn {
+        width: 36px;
+        height: 36px;
+        background: var(--bg-glass);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .day-nav-btn:hover {
+        background: var(--primary);
+        color: var(--text-primary);
+        border-color: var(--primary);
+    }
+
+    .day-nav-btn:active {
+        transform: scale(0.95);
     }
 `;
 

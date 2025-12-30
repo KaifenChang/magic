@@ -19,8 +19,13 @@ const PRACTICES = [
                 <li>盡可能對那項恩典感受到感恩之情</li>
             </ul>
             <p>💫 接下來的27天，每天早上都要重複這個練習！</p>
+            <p>📖 <strong>記得今天閱讀明天的練習內容！</strong></p>
         `,
-        dailyPractice: null
+        dailyPractice: null,
+        nextDayPrep: {
+            reminder: "請閱讀明天的練習（魔法石）",
+            important: false
+        }
     },
     {
         day: 2,
@@ -39,8 +44,14 @@ const PRACTICES = [
                 <li>對今天發生的那件美好的事說出魔法句：<strong>感謝你</strong></li>
             </ul>
             <p>💫 接下來每晚都要重複魔法石練習！</p>
+            <p>📖 <strong>記得今天閱讀明天的練習，並找出三位親近的人的照片！</strong></p>
         `,
-        dailyPractice: null
+        dailyPractice: null,
+        nextDayPrep: {
+            reminder: "請閱讀明天的練習（魔法般的關係），並找出三位親近的人的照片",
+            important: true,
+            items: ["閱讀第3天練習內容", "找出三位親近的人的照片"]
+        }
     },
     {
         day: 3,
@@ -218,12 +229,18 @@ const PRACTICES = [
                 <li>可以是任何人：店員、司機、清潔人員、同事...</li>
                 <li>對每一位服務你的人說<strong>「感謝你！」</strong>來灑魔法金粉</li>
             </ul>
-            <p>⚠️ 今天先閱讀明天的練習，因為第十一天的練習在你一醒來就開始了！</p>
+            <p>⚠️ <strong style="color: #ff6b6b;">重要！今天必須閱讀明天的練習，因為第十一天的練習在你一醒來就開始了！</strong></p>
         `,
         dailyPractice: {
             type: "people",
             prompt: "記錄你今天感謝的十位服務人員",
             count: 10
+        },
+        nextDayPrep: {
+            reminder: "⚠️ 必須閱讀明天的練習！第11天在你醒來那刻就開始！",
+            important: true,
+            critical: true,
+            items: ["閱讀第11天（魔法般的早晨）練習內容", "記住：醒來第一件事就是說「感謝你」"]
         }
     },
     {
